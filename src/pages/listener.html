@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+  <div>
+    <form id="connect-form">
+      <label>接続先 Peer ID: <input name="peerid" required></label>
+      <button type="submit">接続</button>
+    </form>
+
+    <a-scene embedded style="width: 400px; height: 400px">
+      <a-assets>
+        <video id="their-video" autoplay muted loop="true" />
+      </a-assets>
+      <a-videosphere src="#their-video"></a-videosphere>
+    </a-scene>
+    <script src="../listener.ts"></script>
+  </div>
+</body>
+</html>

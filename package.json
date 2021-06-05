@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "dev": "parcel dev src/pages/*.html",
+    "prebuild": "npm run clean",
+    "build": "parcel build src/pages/*.html"
+  },
+  "dependencies": {
+    "aframe": "^1.2.0",
+    "pubsub-js": "^1.9.3",
+    "skyway-js": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/pubsub-js": "^1.8.2",
+    "esbuild": "^0.12.6",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.5",
+    "prettier": "^2.3.0",
+    "typescript": "^4.3.2"
+  }
+}
