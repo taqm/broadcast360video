@@ -27,12 +27,14 @@
     </label>
   </div>
 
-  <a-scene embedded style="width: 400px; height: 400px">
+  <a-scene embedded style="width: 400px; height: 400px; display: inline-block">
     <a-assets>
       <video id="my-video" autoplay muted />
     </a-assets>
     <a-entity camera look-controls="reverseMouseDrag: true"></a-entity>
     <a-videosphere src="#my-video"></a-videosphere>
   </a-scene>
+
+  <video id="their-video" width="400px" style="border: 1px solid"></video>
 </body>
 </html>

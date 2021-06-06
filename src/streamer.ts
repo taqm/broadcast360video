@@ -4,6 +4,7 @@ import { getLocalStream, getPeer } from './core';
 import { DeviceSelector } from './DeviceSelector';
 
 const myVideo = document.getElementById('my-video') as HTMLVideoElement;
+const theirVideo = document.getElementById('their-video') as HTMLVideoElement;
 
 let localStream: MediaStream | null = null;
 const ChangeStreamTopic = Symbol('change-stream');
@@ -33,6 +34,11 @@ peer.on('call', (conn) => {
   }
 
   conn.answer(localStream);
+  conn.on('stream', (stream) => {
+    theirVideo.srcObject = stream;
+    theirVideo.play();
+  });
+
   PubSub.subscribe(ChangeStreamTopic, () => {
     if (localStream) {
       conn.replaceStream(localStream);
@@ -40,23 +46,21 @@ peer.on('call', (conn) => {
   });
 });
 
-{
-  const deviceSelector = new DeviceSelector(
-    document.getElementById('audio-select') as HTMLSelectElement,
-    document.getElementById('video-select') as HTMLSelectElement,
-  );
+const deviceSelector = new DeviceSelector(
+  document.getElementById('audio-select') as HTMLSelectElement,
+  document.getElementById('video-select') as HTMLSelectElement,
+);
 
-  deviceSelector.onChange(async (ev) => {
-    if (localStream) {
-      localStream.getTracks().forEach((it) => {
-        it.stop();
-      });
-    }
-    const stream = await getLocalStream(ev.audioDeviceId, ev.videoDeviceId);
-    myVideo.srcObject = stream;
-    myVideo.play();
-    localStream = stream;
+deviceSelector.onChange(async (ev) => {
+  if (localStream) {
+    localStream.getTracks().forEach((it) => {
+      it.stop();
+    });
+  }
+  const stream = await getLocalStream(ev.audioDeviceId, ev.videoDeviceId);
+  myVideo.srcObject = stream;
+  myVideo.play();
+  localStream = stream;
 
-    PubSub.publish(ChangeStreamTopic);
-  });
-}
+  PubSub.publish(ChangeStreamTopic);
+});
