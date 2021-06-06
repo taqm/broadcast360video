@@ -9,6 +9,7 @@
   "dependencies": {
     "aframe": "^1.2.0",
     "pubsub-js": "^1.9.3",
+    "querystring": "^0.2.0",
     "skyway-js": "^4.4.1"
   },
   "devDependencies": {

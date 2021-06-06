@@ -1,4 +1,4 @@
-import 'pubsub-js';
+import PubSub from 'pubsub-js';
 
 import { getLocalStream, getPeer } from './core';
 import { DeviceSelector } from './DeviceSelector';
@@ -13,6 +13,12 @@ const peer = getPeer();
 peer.on('open', () => {
   const myPeerIdElem = document.getElementById('my-peerid');
   myPeerIdElem!.innerText = peer.id;
+
+  const pageUrlElem = document.getElementById(
+    'this-page-url',
+  ) as HTMLAnchorElement;
+  const pageUrl = `${location.origin}/listener.html?peerid=${peer.id}`;
+  pageUrlElem.innerText = pageUrlElem.href = pageUrl;
 });
 
 peer.on('call', (conn) => {
@@ -22,8 +28,10 @@ peer.on('call', (conn) => {
   }
 
   conn.answer(localStream);
-  PubSub.subscribe(ChangeStreamTopic, (_: any, stream: MediaStream) => {
-    conn.replaceStream(stream);
+  PubSub.subscribe(ChangeStreamTopic, () => {
+    if (localStream) {
+      conn.replaceStream(localStream);
+    }
   });
 });
 
@@ -34,15 +42,11 @@ peer.on('call', (conn) => {
   );
 
   deviceSelector.onChange(async (ev) => {
-    if (localStream) {
-      localStream.clone();
-    }
-
     const stream = await getLocalStream(ev.audioDeviceId, ev.videoDeviceId);
     myVideo.srcObject = stream;
-    await myVideo.play();
+    myVideo.play();
     localStream = stream;
 
-    PubSub.publish(ChangeStreamTopic, stream);
+    PubSub.publish(ChangeStreamTopic);
   });
 }
