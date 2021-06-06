@@ -17,7 +17,6 @@ peer.on('open', () => {
   const pageUrlElem = document.getElementById(
     'this-page-url',
   ) as HTMLAnchorElement;
-  location.pathname;
   const pageUrl = (() => {
     const o = location.origin;
     const rootPath = location.pathname.replace(/\/(index.html)?/, '');
@@ -48,6 +47,11 @@ peer.on('call', (conn) => {
   );
 
   deviceSelector.onChange(async (ev) => {
+    if (localStream) {
+      localStream.getTracks().forEach((it) => {
+        it.stop();
+      });
+    }
     const stream = await getLocalStream(ev.audioDeviceId, ev.videoDeviceId);
     myVideo.srcObject = stream;
     myVideo.play();
