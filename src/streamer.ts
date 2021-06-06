@@ -19,12 +19,12 @@ peer.on('call', (conn) => {
   if (!localStream) {
     console.error('localStreamが存在しません');
     return;
-  };
+  }
 
   conn.answer(localStream);
   PubSub.subscribe(ChangeStreamTopic, (_: any, stream: MediaStream) => {
     conn.replaceStream(stream);
-  })
+  });
 });
 
 {
@@ -46,4 +46,3 @@ peer.on('call', (conn) => {
     PubSub.publish(ChangeStreamTopic, stream);
   });
 }
-

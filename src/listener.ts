@@ -8,7 +8,7 @@ const peer = getPeer();
 connectForm.addEventListener('submit', (ev) => {
   ev.preventDefault();
   const peerId = connectForm['peerid'].value;
-  const conn = peer.call(peerId)
+  const conn = peer.call(peerId);
   conn.on('stream', (stream) => {
     theirVideo.srcObject = stream;
     theirVideo.play();
