@@ -1,6 +1,7 @@
 import Peer from 'skyway-js';
 
-const API_KEY = process.env['SKYWAY_API_KEY']!;
+// @ts-ignore
+const API_KEY = process.env.SKYWAY_API_KEY!;
 
 export const getPeer = () => {
   return new Peer({
