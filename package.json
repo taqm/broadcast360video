@@ -4,7 +4,7 @@
     "clean": "rm -rf dist",
     "dev": "parcel dev src/pages/*.html",
     "prebuild": "npm run clean",
-    "build": "parcel build src/pages/*.html"
+    "build": "parcel build --public-url ./ src/pages/*.html"
   },
   "dependencies": {
     "aframe": "^1.2.0",
