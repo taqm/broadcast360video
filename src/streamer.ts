@@ -59,7 +59,7 @@ deviceSelector.onChange(async (ev) => {
   }
   const stream = await getLocalStream(ev.audioDeviceId, ev.videoDeviceId);
   myVideo.srcObject = stream;
-  myVideo.play();
+  await myVideo.play();
   localStream = stream;
 
   PubSub.publish(ChangeStreamTopic);
