@@ -3,10 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    streamer: './src/streamer.ts',
-    listener: './src/listener.ts',
-  },
+  entry: './src/index.jsx',
   output: {
     path: path.join(__dirname, './dist'),
     filename: '[name]_[fullhash].js',
@@ -14,33 +11,25 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.ts/,
+        test: /.jsx?/,
         loader: 'esbuild-loader',
         options: {
-          loader: 'ts',
+          loader: 'jsx',
           target: 'es2015',
-          tsconfigRaw: require('./tsconfig.json'),
         },
       },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.SKYWAY_API_KEY': JSON.stringify(process.env.SKYWAY_API_KEY),
     }),
     new HtmlWebpackPlugin({
-      template: 'src/pages/index.html',
-      chunks: ['streamer'],
+      template: 'src/index.html',
       inject: 'body',
-    }),
-    new HtmlWebpackPlugin({
-      template: 'src/pages/listener.html',
-      chunks: ['listener'],
-      inject: 'body',
-      filename: 'listener.html',
     }),
   ],
 };
