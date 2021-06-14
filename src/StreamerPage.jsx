@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import MyVideo from './MyVideo';
 import DeviceSelect from './DeviceSelect';
 import { getDevices, getLocalStream, getPeer } from './core';
+import My360Video from './My360Video';
 
 const StreamerPage = () => {
   const [localStream, setLocalStream] = React.useState(null);
@@ -65,7 +65,7 @@ const StreamerPage = () => {
           </Link>
         </div>
       )}
-      {localStream && <MyVideo stream={localStream} muted width={400} />}
+      {localStream && <My360Video stream={localStream} muted />}
     </>
   );
 };

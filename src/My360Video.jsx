@@ -1,16 +1,15 @@
-const My360Video = () => {
-  return (
-    <a-scene
-      embedded
-      style="width: 400px; height: 400px; display: inline-block"
-    >
-      <a-assets>
-        <video id="my-video" autoPlay muted />
-      </a-assets>
-      <a-entity camera look-controls="reverseMouseDrag: true"></a-entity>
-      <a-videosphere src="#my-video"></a-videosphere>
-    </a-scene>
-  );
-};
+import React from 'react';
+
+const My360Video = React.memo(({ stream, muted }) => {
+  const myVideo = document.getElementById('my-video');
+
+  React.useEffect(() => {
+    myVideo.muted = muted;
+    myVideo.srcObject = stream;
+    myVideo.play();
+  }, []);
+
+  return null;
+});
 
 export default My360Video;

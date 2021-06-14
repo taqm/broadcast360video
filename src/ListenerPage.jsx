@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import MyVideo from './MyVideo';
 import DeviceSelect from './DeviceSelect';
 import { getDevices, getLocalStream, getPeer } from './core';
+import My360Video from './My360Video';
 
 const ListenerPage = () => {
   const loc = useLocation();
@@ -33,7 +33,7 @@ const ListenerPage = () => {
 
   return (
     <>
-      {audioDevices && (
+      {audioDevices && !theirStream && (
         <form onSubmit={handleSubmit}>
           <DeviceSelect
             label="マイク"
@@ -51,7 +51,7 @@ const ListenerPage = () => {
           </div>
         </form>
       )}
-      {theirStream && <MyVideo stream={theirStream} />}
+      {theirStream && <My360Video stream={theirStream} />}
     </>
   );
 };
